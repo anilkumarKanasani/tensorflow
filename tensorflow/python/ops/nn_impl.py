@@ -550,6 +550,11 @@ def swish(features):
 
   return features * math_ops.sigmoid(features), grad
 
+@tf_export("nn.tanhexp")
+@dispatch.add_dispatch_support
+@custom_gradient.custom_gradient
+def tanhexp(features):
+  return None
 
 # pylint: disable=redefined-builtin
 @tf_export("linalg.normalize")
