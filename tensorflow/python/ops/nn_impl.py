@@ -575,9 +575,9 @@ def tanhexp(features):
     """Gradient for the Tanhexp activation function"""
     # Naively, x * tf.nn.tanh(e^x) requires keeping both x and tanh(e^x)
     # around for backprop, effectively doubling the tensor's memory consumption.
-    # We use a control dependency here so that sigmoid(features) is re-computed
+    # We use a control dependency here so that tanh(e^x) is re-computed
     # during backprop (the control dep prevents it being de-duped with the
-    # forward pass) and we can free the sigmoid(features) expression immediately
+    # forward pass) and we can free the tanh(e^x) expression immediately
     # after use during the forward pass.
     with ops.control_dependencies([dy]):
       tanhexp_features = math_ops.tanh(math_ops.exp(features))
