@@ -554,7 +554,23 @@ def swish(features):
 @dispatch.add_dispatch_support
 @custom_gradient.custom_gradient
 def tanhexp(features):
-  return None
+  # pylint: disable=g-doc-args
+  """Computes the TanhExp activation function: `x * tanh(e^x)`.
+
+  The TanhExp activation function was introduced in "TanhExp: A Smooth Activation Function
+  with High Convergence Speed for Lightweight Neural Networks"
+  [Xinyu et al. 2020](https://arxiv.org/pdf/2003.09855.pdf) 
+
+  Args:
+    features: A `Tensor` representing preactivation values.
+    name: A name for the operation (optional).
+
+  Returns:
+    The activation value.
+  """
+  # pylint: enable=g-doc-args
+  features = ops.convert_to_tensor(features, name="features")
+  return features * math_ops.tanh(math_ops.exp(features))
 
 # pylint: disable=redefined-builtin
 @tf_export("linalg.normalize")
